@@ -11,5 +11,8 @@ Asp.Net WebAPI Seed Project. This project is created from the base ASP.NET 4.5.2
 + Run `Update Database`
 
 ## Project Structure
-
++ AxHelpher
+++ DateHelpers
+++ WebHelpers
++ DataAccess
 
