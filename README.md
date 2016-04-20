@@ -8,7 +8,7 @@ Asp.Net WebAPI Seed Project. This project is created from the base ASP.NET 4.5.2
 + Refactor project namespace `WebApiSeed` with your prefered project name.
 + Run update packages `Update-Package`
 + Ensure migrations are correctly configured
-+ Run `Update Database`
++ Run `Update-Database`
 
 ## Project Structure
 + App_Data
