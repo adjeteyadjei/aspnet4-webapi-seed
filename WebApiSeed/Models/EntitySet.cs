@@ -94,7 +94,7 @@ namespace WebApiSeed.Models
         public string Ip { get; set; } = "127.0.0.1";
         public DateTime Date { get; set; } = DateTime.Now;
         public string Email { get; set; }
-        public string Code { get; set; }
+        public string Token { get; set; }
         public bool IsActive { get; set; } = false;
     }
 

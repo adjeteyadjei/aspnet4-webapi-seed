@@ -334,6 +334,122 @@ namespace WebApiSeed.Controllers
             return results;
         }
 
+        [Route("Register")]
+        [AllowAnonymous]
+        public async Task<ResultObj> SignUp(RegisterBindingModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return WebHelpers.ProcessException(ModelState.Values);
+                var role = new ProfileRepository().Get(model.ProfileId);
+
+                //Todo: Check Code Validation Somehow
+
+                var user = new User
+                {
+                    UserName = model.UserName,
+                    ProfileId = model.ProfileId,
+                    Name = model.Name,
+                    PhoneNumber = model.PhoneNumber,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                };
+
+                var identityResult = await UserManager.CreateAsync(user, model.Password);
+                if (!identityResult.Succeeded) return WebHelpers.ProcessException(identityResult);
+
+
+                //Add Roles in selected Role to user
+                if (!string.IsNullOrEmpty(role.Privileges))
+                {
+                    role.Privileges.Split(',').ForEach(r => UserManager.AddToRole(user.Id, r.Trim()));
+                }
+
+                return WebHelpers.BuildResponse(null, "Registration Successful", true, 1);
+
+            }
+            catch (Exception ex)
+            {
+                return WebHelpers.ProcessException(ex);
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("resetpassword")]
+        public ResultObj ResetPassword(ResetModel rm)
+        {
+            try
+            {
+                using (var db = new AppDbContext())
+                {
+                    var existing = db.ResetRequests.FirstOrDefault(x => x.Token == rm.Token && x.IsActive);
+                    if (existing == null) throw new Exception("Password reset was not complete");
+
+                    var us = db.Users.FirstOrDefault(x => x.UserName == existing.Email && !x.Hidden && !x.IsDeleted);
+                    if (us == null) throw new Exception("System Error");
+                    var result = UserManager.RemovePassword(us.Id);
+                    if (result.Succeeded)
+                    {
+                        var res = UserManager.AddPassword(us.Id, rm.Password);
+                        if (res.Succeeded) existing.IsActive = false;
+                        else throw new Exception(string.Join(", ", res.Errors));
+                    }
+                    db.SaveChanges();
+                    return WebHelpers.BuildResponse(null, "Password Changed Successfully", true, 1);
+                }
+            }
+            catch (Exception e)
+            {
+                return WebHelpers.ProcessException(e);
+            }
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("reset")]
+        public ResultObj Reset(string email)
+        {
+            try
+            {
+                using (var db = new AppDbContext())
+                {
+                    var existing = db.Users.FirstOrDefault(x => x.UserName == email && !x.Hidden && !x.Locked);
+                    if (existing == null) throw new Exception("Sorry email is not valid. Enjoy!!");
+                    var newRecord = new ResetRequest
+                    {
+                        Email = email,
+                        Token = MessageHelpers.GenerateRandomString(32),
+                        Date = DateTime.Now,
+                        Ip = Request.Headers.Referrer.AbsoluteUri,
+                        IsActive = true
+                    };
+                    db.ResetRequests.Add(newRecord);
+
+                    // create a password reset entry
+                    var link = Request.Headers.Referrer.AbsoluteUri + "#/resetpassword/" + newRecord.Token;
+                    var emailMsg = new EmailOutboxEntry
+                    {
+                        Message =
+                            $"<h3>Password Reset Request</h3> <br/><br/> Please follow the link below to change your password. <br/><br/><b><a href='{link}'>Click here</a></b> to reset your password.<br/><br/><br/><br/>Please ignore this message if you did not make this request.<br/><br/>Thank you. <br/>",
+                        Subject = "Password Reset",
+                        Sender = "support@somedomain.com",
+                        Receiver = newRecord.Email,
+                        Created = DateTime.Now
+                    };
+                    db.EmailOutboxEntries.Add(emailMsg);
+                    db.SaveChanges();
+                    MessageHelpers.SendEmailMessage(emailMsg.Id);
+
+                    return WebHelpers.BuildResponse(null, "Password reset link has been sent to your email.", true, 1);
+                }
+            }
+            catch (Exception e)
+            {
+                return WebHelpers.ProcessException(e);
+            }
+        }
+
 
         // POST api/Account/ChangePassword
         [Authorize]

@@ -75,6 +75,8 @@ namespace WebApiSeed.Models
         public string ConfirmPassword { get; set; }
         public long RoleId { get; set; }
         public string PhoneNumber { get; set; }
+
+        public long ProfileId { get; set; }
     }
 
     public class UpdateUserModel
