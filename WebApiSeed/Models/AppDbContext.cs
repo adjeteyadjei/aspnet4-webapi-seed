@@ -12,6 +12,8 @@ namespace WebApiSeed.Models
 
         public DbSet<AppSetting> AppSettings { get; set; }
         public DbSet<Profile> Profiles { get; set; }
+        public DbSet<ResetRequest> ResetRequests { get; set; }
+        public DbSet<EmailOutboxEntry> EmailOutboxEntries { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
