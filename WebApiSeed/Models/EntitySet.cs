@@ -89,48 +89,4 @@ namespace WebApiSeed.Models
 
     public class AppSetting : LookUp { }
 
-    public class ResetRequest : HasId
-    {
-        public string Ip { get; set; } = "127.0.0.1";
-        public DateTime Date { get; set; } = DateTime.Now;
-        public string Email { get; set; }
-        public string Token { get; set; }
-        public bool IsActive { get; set; } = false;
-    }
-
-    public class ResetModel
-    {
-        public string Token { get; set; }
-        public string Password { get; set; }
-    }
-
-    public class EmailOutboxEntry
-    {
-        public DateTime Created { get; set; } = DateTime.Now;
-        public long Id { get; set; }
-        public bool IsSent { get; set; } = false;
-        public DateTime LastAttemptDate { get; set; } = DateTime.Now.AddMinutes(-1);
-
-        [MaxLength(256)]
-        public string LastAttemptMessage { get; set; }
-
-        [Required, MaxLength(5120)]
-        public string Message { get; set; }
-
-        [MaxLength(256)]
-        public string Notes { get; set; }
-
-        [Required, MaxLength(128)]
-        public string Receiver { get; set; }
-
-        [Required, MaxLength(128)]
-        public string Sender { get; set; }
-
-        [Required, MaxLength(256)]
-        public string Subject { get; set; }
-
-        [MaxLength(512)]
-        public string FilePath { get; set; }
-    }
-
 }
