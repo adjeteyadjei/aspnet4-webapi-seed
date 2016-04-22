@@ -20,18 +20,18 @@ namespace WebApiSeed.AxHelpers
             {
                 BaseUrl = new Uri("https://api.mailgun.net/v3"),
                 Authenticator = new HttpBasicAuthenticator("api",
-                    "key-2a3fec9de587928bde93299c20e1e376")
+                    "key-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
             };
             var request = new RestRequest();
             //request.
             request.AddParameter("domain",
-                "sandbox4221d43aebe74a2d863c77639f9823aa.mailgun.org", ParameterType.UrlSegment);
+                "sandboxxxxxxxxxxxxxxxxxxxxxxxxxxxx.mailgun.org", ParameterType.UrlSegment);
             request.Resource = "{domain}/messages";
-            request.AddParameter("from", "Payroll Self Service <mailgun@sandbox4221d43aebe74a2d863c77639f9823aa.mailgun.org>");
+            request.AddParameter("from", "App Name <mailgun@sandboxxxxxxxxxxxxxx.mailgun.org>");
             request.AddParameter("to", eoe.Receiver);
             request.AddParameter("subject", eoe.Subject);
             request.AddParameter("html", eoe.Message);
-            request.AddParameter("text", "The Axon Payroll Team");
+            request.AddParameter("text", "App Name");
             request.Method = Method.POST;
             var res = client.Execute(request);
             if (res.StatusCode == HttpStatusCode.OK)
