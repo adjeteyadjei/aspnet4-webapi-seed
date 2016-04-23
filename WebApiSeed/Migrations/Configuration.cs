@@ -92,6 +92,25 @@ namespace WebApiSeed.Migrations
             roles.ForEach(q => context.Roles.AddOrUpdate(q));
             #endregion
 
+            #region AppSettings
+            var appSettings = new List<AppSetting>
+            {
+                new AppSetting {Name = ConfigKeys.AppTitle, Value = "Seed App", Locked = true, CreatedAt = DateTime.UtcNow, CreatedBy = "System", ModifiedAt = DateTime.UtcNow, ModifiedBy = "System"},
+                new AppSetting {Name = ConfigKeys.Logo, Value = "", Locked = true, CreatedAt = DateTime.UtcNow, CreatedBy = "System", ModifiedAt = DateTime.UtcNow, ModifiedBy = "System"},
+                new AppSetting {Name = ConfigKeys.ToolbarColour, Value = "", Locked = true, CreatedAt = DateTime.UtcNow, CreatedBy = "System", ModifiedAt = DateTime.UtcNow, ModifiedBy = "System"},
+                new AppSetting {Name = ConfigKeys.EmailAccountName, Value = "", Locked = true, CreatedAt = DateTime.UtcNow, CreatedBy = "System", ModifiedAt = DateTime.UtcNow, ModifiedBy = "System"},
+                new AppSetting {Name = ConfigKeys.EmailApiKey, Value = "", Locked = true, CreatedAt = DateTime.UtcNow, CreatedBy = "System", ModifiedAt = DateTime.UtcNow, ModifiedBy = "System"},
+                new AppSetting {Name = ConfigKeys.EmailSender, Value = "", Locked = true, CreatedAt = DateTime.UtcNow, CreatedBy = "System", ModifiedAt = DateTime.UtcNow, ModifiedBy = "System"},
+                new AppSetting {Name = ConfigKeys.SmsApiKey, Value = "", Locked = true, CreatedAt = DateTime.UtcNow, CreatedBy = "System", ModifiedAt = DateTime.UtcNow, ModifiedBy = "System"},
+                new AppSetting {Name = ConfigKeys.SmsSender, Value = "", Locked = true, CreatedAt = DateTime.UtcNow, CreatedBy = "System", ModifiedAt = DateTime.UtcNow, ModifiedBy = "System"}
+            };
+
+            foreach (var setting in appSettings.Where(p => !context.AppSettings.Any(x => x.Name == p.Name)))
+            {
+                context.AppSettings.Add(setting);
+            }
+            #endregion
+
             context.SaveChanges();
             base.Seed(context);
         }

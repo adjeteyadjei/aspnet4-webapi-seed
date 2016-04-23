@@ -179,6 +179,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SetupConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -193,6 +194,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DataAccess\Filters\BaseFilter.cs" />
     <Compile Include="DataAccess\Filters\UserFilter.cs" />
+    <Compile Include="DataAccess\Repositories\AppSettingRepository.cs" />
     <Compile Include="DataAccess\Repositories\BaseRepository.cs" />
     <Compile Include="DataAccess\Repositories\ProfileRepository.cs" />
     <Compile Include="DataAccess\Repositories\UserRepository.cs" />
@@ -200,6 +202,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="LogicUnit\Mailer.cs" />
+    <Compile Include="LogicUnit\Messenger.cs" />
+    <Compile Include="LogicUnit\NasaraSmsApi.cs" />
+    <Compile Include="LogicUnit\Models.cs" />
+    <Compile Include="LogicUnit\ReferenceGenerator.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -237,6 +244,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="SetupConfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <PropertyGroup>

@@ -44,7 +44,14 @@
 
     public class ConfigKeys
     {
-       
+        public static string EmailAccountName = "EmailAccountName";
+        public static string EmailApiKey = "EmailApiKey";
+        public static string EmailSender = "EmailSender";
+        public static string SmsApiKey = "SmsApiKey";
+        public static string SmsSender = "SmsSender";
+        public static string AppTitle = "AppTitle";
+        public static string Logo = "Logo";
+        public static string ToolbarColour = "ToolbarColour";
     }
 
 }

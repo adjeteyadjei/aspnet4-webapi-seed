@@ -87,7 +87,12 @@ namespace WebApiSeed.Models
         public List<User> Users { get; set; }
     }
 
-    public class AppSetting : LookUp { }
+    public class AppSetting : AuditFields
+    {
+        [MaxLength(512), Required, Index(IsUnique = true)]
+        public string Name { get; set; }
+        public string Value { get; set; }
+    }
 
     public class ResetRequest : HasId
     {
@@ -132,5 +137,39 @@ namespace WebApiSeed.Models
         [MaxLength(512)]
         public string FilePath { get; set; }
     }
+
+
+    public class Message : HasId
+    {
+        [MaxLength(256), Required]
+        public string Recipient { get; set; }
+        [MaxLength(256)]
+        public string Name { get; set; }
+        [MaxLength(128)]
+        public string Subject { get; set; }
+        [Required]
+        public string Text { get; set; }
+        public MessageStatus Status { get; set; }
+        public MessageType Type { get; set; }
+        [MaxLength(5000)]
+        public string Response { get; set; }
+        public DateTime TimeStamp { get; set; }
+        [NotMapped]
+        public string Attachment { get; set; }
+    }
+
+    public enum MessageType
+    {
+        SMS,
+        Email
+    }
+
+    public enum MessageStatus
+    {
+        Sent,
+        Received,
+        Failed
+    }
+
 
 }
