@@ -233,10 +233,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="_Definitions\_project.vstemplate.xml" />
-    <Content Include="_preprocess.xml">
-      <SubType>Designer</SubType>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
