@@ -4,7 +4,7 @@ Asp.Net WebAPI Seed Project. This project is created from the base ASP.NET 4.5.2
 + API Controllers
 
 ## Getting Started
-+ Clone the project `git clone https://github.com/adjeteyadjei/aspnetwebapiseed.git`
++ Clone the project `git clone https://github.com/adjeteyadjei/aspnet4-webapi-seed.git`
 + Refactor project namespace `WebApiSeed` with your prefered project name.
 + Run update packages `Update-Package`
 + Ensure migrations are correctly configured
